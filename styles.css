@@ -1,36 +1,35 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kapakana:wght@300..400&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
 @font-face {
   font-family: "KoPub Batang";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Regular.woff") format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "KoPub Batang";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Light.woff") format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Light.woff")
+    format("woff");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: "KoPub Batang";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Bold.woff") format("woff");
+  src: url("https://static.wfonts.com/data/2016/07/09/kopub-batang/KoPubBatang-Bold.ttf")
+      format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KoPubBatang-Bold.woff")
+      format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Kapakana";
-  src: url("https://fonts.cdnfonts.com/s/17481/Kapakana.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
   font-family: "Libertinus Math";
-  src: url("https://cdn.jsdelivr.net/npm/libertinus-fonts@1.0.0/fonts/LibertinusMath-Regular.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/libertinus-fonts@1.0.0/fonts/LibertinusMath-Regular.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -63,7 +62,6 @@ body {
 }
 
 img,
-video,
 iframe {
   display: block;
   max-width: 100%;
@@ -96,14 +94,16 @@ a {
 
 .hero__media,
 .hero__shade,
-.hero__media video {
+.hero__poster,
+.hero__iframe,
+.hero__iframe iframe {
   inset: 0;
   height: 100%;
   position: absolute;
   width: 100%;
 }
 
-.hero__media video {
+.hero__poster {
   background: #141311;
   object-fit: cover;
   object-position: 50% 50%;
@@ -111,10 +111,35 @@ a {
   animation: hero-drift 17s ease-out forwards;
 }
 
+.hero__iframe {
+  display: none;
+  z-index: 2;
+}
+
+.hero__iframe iframe {
+  border: 0;
+}
+
+.hero.is-video-playing .hero__poster {
+  display: none;
+}
+
+.hero.is-video-playing .hero__iframe {
+  display: block;
+}
+
 .hero__shade {
-  background:
-    linear-gradient(180deg, rgba(28, 27, 24, 0.22), rgba(28, 27, 24, 0.08) 38%, rgba(28, 27, 24, 0.4)),
-    radial-gradient(circle at 50% 60%, rgba(20, 18, 16, 0.08), rgba(20, 18, 16, 0.52));
+  background: linear-gradient(
+      180deg,
+      rgba(28, 27, 24, 0.22),
+      rgba(28, 27, 24, 0.08) 38%,
+      rgba(28, 27, 24, 0.4)
+    ),
+    radial-gradient(
+      circle at 50% 60%,
+      rgba(20, 18, 16, 0.08),
+      rgba(20, 18, 16, 0.52)
+    );
   pointer-events: none;
   transition: opacity 360ms ease;
   z-index: 1;
@@ -200,37 +225,15 @@ a {
   margin: 0;
 }
 
-.hero__scroll {
-  bottom: 2rem;
-  color: var(--ivory);
-  font-size: 0.86rem;
-  left: 50%;
-  letter-spacing: 0.16em;
-  position: absolute;
-  text-decoration: none;
-  text-transform: uppercase;
-  transform: translateX(-50%);
-  transition: opacity 360ms ease;
-  z-index: 3;
-}
-
 .hero__play {
   top: 34%;
   z-index: 4;
 }
 
 .hero.is-video-playing .hero__content,
-.hero.is-video-playing .hero__scroll {
+.hero.is-video-playing .hero__shade {
   opacity: 0;
   transform: translateY(0.5rem);
-}
-
-.hero.is-video-playing .hero__scroll {
-  transform: translateX(-50%);
-}
-
-.hero.is-video-playing .hero__shade {
-  opacity: 0.22;
 }
 
 .section-pad {
@@ -240,21 +243,26 @@ a {
 .invite {
   align-items: center;
   display: grid;
-  gap: clamp(2rem, 7vw, 7rem);
-  grid-template-columns: minmax(17rem, 0.72fr) minmax(20rem, 1fr);
-  min-height: 58rem;
+  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(18rem, 0.82fr) minmax(28rem, 1fr);
+  min-height: 54rem;
+  padding-left: clamp(6rem, 10vw, 10rem);
+  padding-right: clamp(5rem, 9vw, 9rem);
 }
 
 .invite__photo {
   box-shadow: var(--shadow);
   margin: 0;
+  max-width: 30rem;
   overflow: hidden;
 }
 
 .invite__photo img {
   aspect-ratio: 397 / 594;
+  filter: grayscale(1);
   height: 100%;
   object-fit: cover;
+  object-position: 30% center;
   transform: scale(1.02);
   transition: transform 900ms ease, filter 900ms ease;
   width: 100%;
@@ -266,33 +274,38 @@ a {
 
 .invite__photo:hover img,
 .invite__photo:focus-within img {
-  filter: saturate(1.04) contrast(1.02);
+  filter: grayscale(1) contrast(1.04);
   transform: scale(1.09);
 }
 
 .invite__copy {
-  max-width: 38rem;
+  max-width: 42rem;
   text-align: center;
 }
 
 .script-heading {
+  display: inline-block;
   font-family: "Kapakana", cursive;
-  font-size: clamp(5rem, 10vw, 6.25rem);
+  font-size: clamp(5.6rem, 7.8vw, 7.8rem);
   letter-spacing: -0.05em;
   line-height: 0.8;
-  margin: 0 0 2rem;
+  margin: 0 0 clamp(2rem, 3.2vw, 3.2rem);
+  white-space: nowrap;
 }
 
 .invite__copy p:not(.script-heading) {
-  font-size: clamp(1rem, 1.45vw, 1.4rem);
+  font-size: clamp(1rem, 1.18vw, 1.25rem);
   font-weight: 700;
-  line-height: 1.75;
-  margin: 0 auto 1rem;
+  line-height: 1.35;
+  margin: 0 auto clamp(2rem, 3.2vw, 3.6rem);
+  max-width: 34rem;
 }
 
 .invite__date {
-  font-size: clamp(1.45rem, 2.4vw, 2.2rem) !important;
-  margin-top: 1.8rem !important;
+  font-size: clamp(1.8rem, 2.9vw, 2.65rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.1 !important;
+  margin-top: 0 !important;
 }
 
 .text-link {
@@ -306,7 +319,7 @@ a {
 
 .button-link {
   border: 1px solid var(--ink);
-  display: inline-flex;
+  display: none;
   font-weight: 700;
   justify-content: center;
   letter-spacing: 0.12em;
@@ -332,6 +345,12 @@ a {
   position: relative;
 }
 
+.countdown-band {
+  aspect-ratio: 1280 / 853;
+  background: var(--paper);
+  min-height: 0;
+}
+
 .countdown-band img,
 .rsvp > img {
   height: 100%;
@@ -342,7 +361,8 @@ a {
 }
 
 .countdown-band img {
-  filter: grayscale(1) contrast(1.18) brightness(0.7);
+  filter: grayscale(1) contrast(1.02) brightness(0.96);
+  object-fit: contain;
 }
 
 .countdown-band__overlay,
@@ -354,9 +374,7 @@ a {
 }
 
 .countdown-band__overlay {
-  background:
-    radial-gradient(circle at 50% 45%, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.7)),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.68));
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .countdown-band__content {
@@ -373,33 +391,35 @@ a {
 }
 
 .countdown-band h2 {
-  font-size: clamp(0.9rem, 1.3vw, 1.2rem);
-  font-weight: 300;
-  letter-spacing: 0.35em;
-  margin: 0 0 2rem;
-  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.74);
-  text-transform: uppercase;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .countdown-display {
   display: grid;
-  gap: clamp(0.75rem, 2.5vw, 2.4rem);
+  gap: clamp(1.2rem, 3vw, 4rem);
   grid-template-columns: repeat(4, minmax(10rem, 1fr));
   max-width: 76rem;
   width: min(100%, 76rem);
 }
 
 .countdown-display div {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.18));
-  border: 1px solid rgba(255, 246, 208, 0.26);
+  background: transparent;
+  border: 0;
   min-width: 0;
-  padding: clamp(1rem, 2vw, 1.6rem) clamp(0.85rem, 1.5vw, 1.25rem);
+  padding: 0;
 }
 
 .countdown-display strong {
   display: block;
   font-family: "Libertinus Math", "KoPub Batang", Georgia, serif;
-  font-size: clamp(4rem, 8vw, 8rem);
+  font-size: clamp(3.4rem, 6.4vw, 7rem);
   font-weight: 400;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
@@ -414,12 +434,13 @@ a {
 }
 
 .countdown-display span {
+  color: rgba(255, 246, 208, 0.82);
   display: block;
-  font-size: clamp(1rem, 2vw, 1.85rem);
+  font-size: clamp(1rem, 1.9vw, 1.65rem);
   font-weight: 300;
   letter-spacing: -0.05em;
-  margin-top: 1.3rem;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.82);
+  margin-top: 1rem;
+  text-shadow: none;
   text-transform: uppercase;
 }
 
@@ -442,13 +463,6 @@ a {
   font-weight: 300;
   line-height: 1.05;
   margin: 0;
-}
-
-.wedding-video {
-  aspect-ratio: 16 / 9;
-  background: #141311;
-  object-fit: cover;
-  width: 100%;
 }
 
 .play-toggle {
@@ -485,20 +499,30 @@ a {
 }
 
 .schedule {
-  align-items: center;
+  align-items: start;
   display: grid;
-  gap: clamp(2rem, 9vw, 9rem);
-  grid-template-columns: minmax(16rem, 0.9fr) minmax(18rem, 1fr);
+  column-gap: clamp(0.5rem, 1.6vw, 1.8rem);
+  grid-template-columns: minmax(16rem, 0.9fr) minmax(22rem, 1.1fr);
+  min-height: 45rem;
+  padding-top: clamp(5rem, 8vw, 8rem);
+}
+
+.schedule__mobile-image,
+.mobile-rsvp-teaser {
+  display: none;
 }
 
 .schedule__title {
+  color: rgba(75, 73, 73, 0.84);
   text-align: center;
   text-transform: uppercase;
+  transform: translateY(-1.5rem);
 }
 
 .schedule__title span,
 .schedule__title h2 {
   display: block;
+  font-family: "KoPub Batang", Georgia, serif;
   font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 300;
   letter-spacing: -0.04em;
@@ -510,7 +534,7 @@ a {
   border-left: 1px solid var(--line);
   list-style: none;
   margin: 0;
-  padding: 0 0 0 2rem;
+  padding: 0 0 0 clamp(0.9rem, 1.3vw, 1.35rem);
 }
 
 .schedule__list li {
@@ -534,36 +558,33 @@ a {
 }
 
 .rsvp {
-  min-height: 70rem;
+  min-height: 52rem;
 }
 
 .rsvp > img {
+  filter: grayscale(1);
   object-position: center bottom;
 }
 
 .rsvp__overlay {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(24, 22, 19, 0.16), rgba(24, 22, 19, 0.64)),
-    linear-gradient(180deg, rgba(24, 22, 19, 0.16), rgba(24, 22, 19, 0.36) 58%, rgba(24, 22, 19, 0.08));
+  background: rgba(0, 0, 0, 0.38);
 }
 
 .rsvp__content {
-  align-items: start;
+  align-items: center;
   color: var(--ivory);
-  display: grid;
-  gap: clamp(2rem, 5vw, 5rem);
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   inset: 0;
-  grid-template-rows: auto 1fr;
-  justify-items: center;
-  padding: clamp(2rem, 4vw, 3.8rem) clamp(1rem, 5vw, 5rem) clamp(5rem, 8vw, 8rem);
+  justify-content: center;
+  padding: clamp(2rem, 4vw, 3.8rem) clamp(1rem, 5vw, 5rem);
   position: absolute;
   text-align: center;
   z-index: 2;
 }
 
 .rsvp__heading {
-  align-self: end;
+  margin-top: 0;
 }
 
 .rsvp__heading p {
@@ -583,13 +604,23 @@ a {
   letter-spacing: 0.08em;
   line-height: 1.04;
   text-transform: uppercase;
+  text-decoration-line: underline;
   text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
   animation: cta-float 2.8s ease-in-out infinite;
 }
 
+.rsvp-form-section {
+  background: var(--paper);
+  padding: clamp(4rem, 7vw, 7rem) clamp(1rem, 5vw, 5rem);
+}
+
 .form-shell {
-  background:
-    linear-gradient(135deg, rgba(255, 254, 250, 0.86), rgba(255, 246, 208, 0.44)),
+  background: linear-gradient(
+      135deg,
+      rgba(255, 254, 250, 0.86),
+      rgba(255, 246, 208, 0.44)
+    ),
     rgba(255, 255, 255, 0.64);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 246, 208, 0.48);
@@ -724,17 +755,63 @@ a {
   }
 
   .hero {
-    min-height: 100svh;
+    min-height: 0;
+    width: 100%;
+    max-width: 26rem;
+    aspect-ratio: 9 / 16.25;
+    margin: 0 auto;
   }
 
-  .hero__media video {
-    object-position: 45% 50%;
+  .hero__poster {
+    object-position: center top;
+    transform: none;
+    animation: none;
   }
 
   .hero h1 {
-    font-size: clamp(6.2rem, 31vw, 9rem);
+    font-size: clamp(4.6rem, 19vw, 6.4rem);
     line-height: 0.54;
-    margin-bottom: 2rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .hero__content {
+    justify-content: end;
+    padding: 5rem 1rem 5.45rem;
+  }
+
+  .hero__content p:last-child {
+    font-size: 0.62rem;
+    letter-spacing: 0;
+  }
+
+  .hero__scroll {
+    bottom: 3.1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .hero__scroll::before {
+    content: "";
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 1px solid rgba(255, 246, 208, 0.8);
+    border-radius: 50%;
+    margin: 0 auto 0.2rem;
+  }
+
+  .hero__play {
+    top: 50%;
+    height: 3.2rem;
+    width: 3.2rem;
+  }
+
+  .play-toggle span {
+    border-bottom-width: 0.55rem;
+    border-left-width: 0.8rem;
+    border-top-width: 0.55rem;
+    margin-left: 0.18rem;
   }
 
   .invite,
@@ -743,17 +820,45 @@ a {
   }
 
   .invite {
+    display: block;
     min-height: 0;
+    padding: 3.4rem 1.75rem 4.2rem;
   }
 
   .invite__photo {
+    display: none;
+  }
+
+  .invite__copy {
+    max-width: 34rem;
     margin: 0 auto;
-    max-width: 24rem;
-    width: 100%;
+  }
+
+  .script-heading {
+    font-size: 4.35rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .invite__copy p:not(.script-heading) {
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    max-width: 31rem;
+  }
+
+  .invite__date {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .button-link {
+    display: none;
   }
 
   .countdown-band {
-    min-height: 36rem;
+    display: none;
   }
 
   .countdown-display {
@@ -765,23 +870,111 @@ a {
     font-size: clamp(3.1rem, 15vw, 4.8rem);
   }
 
-  .wedding-video {
-    aspect-ratio: 9 / 16;
+  .schedule {
+    display: block;
+    min-height: 0;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+  }
+
+  .schedule__mobile-image {
+    aspect-ratio: 9 / 15.8;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    object-position: left 38%;
+    width: 100%;
+  }
+
+  .schedule__title,
+  .schedule__list {
+    color: var(--ink);
+    left: 9.5%;
+    position: absolute;
+    text-align: left;
+    z-index: 2;
+  }
+
+  .schedule__title {
+    top: 6.2%;
+  }
+
+  .schedule__title span {
+    display: inline;
+  }
+
+  .schedule__title span,
+  .schedule__title h2 {
+    display: inline;
+    font-family: "Kapakana", cursive;
+    font-size: 2.25rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    text-transform: none;
   }
 
   .schedule__list {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    padding: 1.25rem 0 0;
+    border: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    top: 9.2%;
+  }
+
+  .schedule__list li {
+    padding: 0 0 0.52rem;
+  }
+
+  .schedule__list time,
+  .schedule__list span {
+    display: inline;
+    font-size: 0.72rem;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-transform: none;
+  }
+
+  .schedule__list time {
+    margin-right: 0.22rem;
+  }
+
+  .mobile-rsvp-teaser {
+    display: block;
+    padding: 3.4rem 1.5rem 4.6rem;
+    text-align: center;
+  }
+
+  .mobile-rsvp-teaser p {
+    font-family: "Kapakana", cursive;
+    font-size: 2.3rem;
+    letter-spacing: -0.04em;
+    line-height: 0.82;
+    margin: 0 auto 1.2rem;
+  }
+
+  .mobile-rsvp-teaser a {
+    text-decoration-thickness: 1px;
+  }
+
+  .mobile-rsvp-teaser span {
+    color: var(--soft-ink);
+    display: block;
+    font-size: 0.68rem;
   }
 
   .rsvp {
-    min-height: 70rem;
+    display: none;
   }
 
   .rsvp__content {
-    grid-template-columns: 1fr;
-    padding: 2.5rem 1rem 5rem;
+    padding: 2.5rem 1rem;
+  }
+
+  .rsvp__heading {
+    margin-top: 0;
   }
 
   .form-shell {
@@ -794,13 +987,9 @@ a {
     padding: 4rem 1rem;
   }
 
-  .hero__scroll {
-    bottom: 1.2rem;
-    white-space: nowrap;
-  }
-
   .invite__copy p:not(.script-heading) {
-    font-size: 0.96rem;
+    font-size: 0.8rem;
+    max-width: 31rem;
   }
 
   .countdown-band {
@@ -808,7 +997,7 @@ a {
   }
 
   .rsvp {
-    min-height: 68rem;
+    display: none;
   }
 
   .form-shell {

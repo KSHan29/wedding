@@ -1,6 +1,8 @@
 const weddingDate = new Date("2026-11-15T19:00:00+08:00");
 const countdown = document.querySelector("[data-countdown]");
-const responsiveVideo = document.querySelector("[data-responsive-video]");
+const responsiveVideo = document.querySelector("[data-youtube-video]");
+const videoPoster = document.querySelector("[data-video-poster]");
+const videoFrame = document.querySelector("[data-video-frame]");
 const playToggle = document.querySelector(".play-toggle");
 const hero = document.querySelector(".hero");
 const mobileQuery = window.matchMedia("(max-width: 820px)");
@@ -58,55 +60,58 @@ function initReveals() {
   revealItems.forEach((item) => observer.observe(item));
 }
 
-function setVideoForViewport() {
-  if (!responsiveVideo) return;
+function getActiveVideoConfig() {
+  if (!responsiveVideo) return {};
 
-  const nextSrc = mobileQuery.matches
-    ? responsiveVideo.dataset.mobileSrc
-    : responsiveVideo.dataset.desktopSrc;
+  return mobileQuery.matches
+    ? {
+        embed: responsiveVideo.dataset.mobileEmbed,
+        poster: responsiveVideo.dataset.mobilePoster,
+      }
+    : {
+        embed: responsiveVideo.dataset.desktopEmbed,
+        poster: responsiveVideo.dataset.desktopPoster,
+      };
+}
 
-  if (!nextSrc || responsiveVideo.dataset.activeSrc === nextSrc) return;
+function resetVideoPreview() {
+  if (!responsiveVideo || !videoPoster || !videoFrame) return;
 
-  const wasPlaying = !responsiveVideo.paused && !responsiveVideo.ended;
-  responsiveVideo.dataset.activeSrc = nextSrc;
-  responsiveVideo.src = nextSrc;
-  responsiveVideo.load();
-
-  if (wasPlaying) {
-    responsiveVideo.play().catch(() => {});
+  const { poster } = getActiveVideoConfig();
+  if (poster && videoPoster.getAttribute("src") !== poster) {
+    videoPoster.src = poster;
   }
+
+  videoFrame.replaceChildren();
+  playToggle?.classList.remove("is-hidden");
+  hero?.classList.remove("is-video-playing");
+}
+
+function playResponsiveVideo() {
+  if (!videoFrame) return;
+
+  const { embed } = getActiveVideoConfig();
+  if (!embed) return;
+
+  const separator = embed.includes("?") ? "&" : "?";
+  const iframe = document.createElement("iframe");
+  iframe.src = `${embed}${separator}autoplay=1&rel=0`;
+  iframe.title = "YouTube video player";
+  iframe.allow =
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  iframe.allowFullscreen = true;
+
+  videoFrame.replaceChildren(iframe);
+  playToggle?.classList.add("is-hidden");
+  hero?.classList.add("is-video-playing");
 }
 
 function initVideoControls() {
   if (!responsiveVideo || !playToggle) return;
 
-  playToggle.addEventListener("click", () => {
-    responsiveVideo.play().catch(() => {});
-  });
-
-  responsiveVideo.addEventListener("play", () => {
-    playToggle.classList.add("is-hidden");
-    hero?.classList.add("is-video-playing");
-  });
-
-  responsiveVideo.addEventListener("pause", () => {
-    playToggle.classList.remove("is-hidden");
-    hero?.classList.remove("is-video-playing");
-  });
-
-  responsiveVideo.addEventListener("ended", () => {
-    playToggle.classList.remove("is-hidden");
-    hero?.classList.remove("is-video-playing");
-  });
-
-  responsiveVideo.addEventListener("error", () => {
-    const fallbackSrc = responsiveVideo.dataset.fallbackSrc;
-    if (!fallbackSrc || responsiveVideo.dataset.activeSrc === fallbackSrc) return;
-
-    responsiveVideo.dataset.activeSrc = fallbackSrc;
-    responsiveVideo.src = fallbackSrc;
-    responsiveVideo.load();
-  });
+  resetVideoPreview();
+  playToggle.addEventListener("click", playResponsiveVideo);
 }
 
 function initRsvpFormFallback() {
@@ -138,12 +143,11 @@ function initRsvpFormFallback() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 initReveals();
-setVideoForViewport();
 initVideoControls();
 initRsvpFormFallback();
 
 if (typeof mobileQuery.addEventListener === "function") {
-  mobileQuery.addEventListener("change", setVideoForViewport);
+  mobileQuery.addEventListener("change", resetVideoPreview);
 } else {
-  mobileQuery.addListener(setVideoForViewport);
+  mobileQuery.addListener(resetVideoPreview);
 }

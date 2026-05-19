@@ -11,9 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+    <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="preload" href="assets/images/Video_preview.JPG" as="image" />
-    <link rel="stylesheet" href="styles.css?v=20260519-logo-offsets" />
+    <link rel="preload" href="assets/images/mobile_video_preview.jpg" as="image" />
+    <link rel="stylesheet" href="styles.css?v=20260520-mobile-invite-rsvp" />
   </head>
   <body>
     <a class="skip-link" href="#invitation">Skip to invitation details</a>
@@ -31,25 +32,21 @@
         <img src="assets/images/logo.png" alt="" />
       </div>
 
-      <div class="hero__media">
-        <video
-          class="wedding-video hero__video"
-          data-responsive-video
-          data-desktop-src="assets/video/PWS_Horizontal.mov"
-          data-mobile-src="assets/video/PWS_Vertical.mp4"
-          data-fallback-src="assets/video/wedding-film.m4v"
-          poster="assets/images/Video_preview.JPG"
-          playsinline
-          preload="metadata"
-          controls
-        >
-          <source
-            src="assets/video/PWS_Horizontal.mov"
-            type="video/quicktime"
-          />
-          <source src="assets/video/wedding-film.m4v" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <div
+        class="hero__media"
+        data-youtube-video
+        data-desktop-embed="https://www.youtube.com/embed/csCk53LGfi4?si=SXvGYCzMfYFnSvKA"
+        data-mobile-embed="https://www.youtube.com/embed/ukECQHqOxCY"
+        data-desktop-poster="assets/images/Video_preview.JPG"
+        data-mobile-poster="assets/images/mobile_video_preview.jpg"
+      >
+        <img
+          class="hero__poster"
+          data-video-poster
+          src="assets/images/Video_preview.JPG"
+          alt="Gina and Han's wedding film preview"
+        />
+        <div class="hero__iframe" data-video-frame></div>
       </div>
       <button
         class="play-toggle hero__play"
@@ -63,7 +60,6 @@
         <h1>Gina &amp; Han</h1>
         <p>15ᵗʰ November 2026</p>
       </div>
-      <a class="hero__scroll" href="#invitation">You're invited</a>
     </header>
 
     <main>
@@ -77,8 +73,8 @@
         <div class="invite__copy">
           <p class="script-heading">You're Invited!</p>
           <p>
-            Together with our families, we, Gina and Seow Han joyfully invite
-            you to celebrate our union in marriage.
+            Together with our families, we, Gina and Seow Han<br />
+            joyfully invite you to celebrate our union in marriage.
           </p>
           <p class="invite__date">Sunday, 15ᵗʰ November 2026</p>
           <p>Frasers House, 80 Middle Road, Singapore 188966</p>
@@ -104,7 +100,7 @@
         />
         <div class="countdown-band__overlay"></div>
         <div class="countdown-band__content">
-          <h2 id="countdown-title">Counting Down</h2>
+          <h2 id="countdown-title">Countdown</h2>
           <div class="countdown-display" data-countdown aria-live="polite">
             <div>
               <strong data-days>000</strong>
@@ -127,6 +123,12 @@
       </section>
 
       <section class="schedule section-pad reveal" id="schedule">
+        <img
+          class="schedule__mobile-image"
+          src="assets/images/mobile_image1.jpg"
+          alt=""
+          aria-hidden="true"
+        />
         <div class="schedule__title">
           <span>The</span>
           <h2>Schedule</h2>
@@ -146,13 +148,21 @@
           </li>
           <li>
             <time>9:25 PM</time>
-            <span>Yum Seng</span>
+            <span>Yam Seng</span>
           </li>
           <li>
             <time>10:30 PM</time>
             <span>End</span>
           </li>
         </ol>
+      </section>
+
+      <section class="mobile-rsvp-teaser reveal" aria-label="RSVP reminder">
+        <p>
+          Please let us know<br />
+          if you are attending <a href="#rsvp-form">here</a>
+        </p>
+        <span>we are excited to see you!</span>
       </section>
 
       <section class="rsvp reveal" id="rsvp">
@@ -163,45 +173,37 @@
         />
         <div class="rsvp__overlay"></div>
         <div class="rsvp__content" aria-labelledby="rsvp-title">
-          <div class="form-shell" data-form-shell>
-            <iframe
-              data-rsvp-form
-              src="https://docs.google.com/forms/d/e/1FAIpQLSfK4AeXJ0OOY9_4jHaGoByBNTTb6H6XWWID6tr3hS35Po8E6Q/viewform?embedded=true"
-              width="640"
-              height="1184"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
-              >Loading…</iframe
-            >
-            <a
-              class="form-fallback"
-              data-rsvp-fallback
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfK4AeXJ0OOY9_4jHaGoByBNTTb6H6XWWID6tr3hS35Po8E6Q/viewform?usp=header"
-              target="_blank"
-              rel="noopener"
-              hidden
-              >RSVP here</a
-            >
-          </div>
           <div class="rsvp__heading">
-            <p id="rsvp-title">Or RSVP</p>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfK4AeXJ0OOY9_4jHaGoByBNTTb6H6XWWID6tr3hS35Po8E6Q/viewform?usp=header"
-              target="_blank"
-              rel="noopener"
-              ><span>HERE</span></a
-            >
+            <p id="rsvp-title">RSVP</p>
+            <a href="#rsvp-form"><span>HERE</span></a>
           </div>
         </div>
       </section>
+
+      <section class="rsvp-form-section reveal" id="rsvp-form">
+        <div class="form-shell" data-form-shell>
+          <iframe
+            data-rsvp-form
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfK4AeXJ0OOY9_4jHaGoByBNTTb6H6XWWID6tr3hS35Po8E6Q/viewform?embedded=true"
+            width="640"
+            height="1184"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            >Loading…</iframe
+          >
+          <a
+            class="form-fallback"
+            data-rsvp-fallback
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfK4AeXJ0OOY9_4jHaGoByBNTTb6H6XWWID6tr3hS35Po8E6Q/viewform?usp=header"
+            target="_blank"
+            rel="noopener"
+            hidden
+            >RSVP here</a
+          >
+        </div>
+      </section>
     </main>
-
-    <footer class="footer">
-      <a href="#top">Back to top</a>
-      <p>Gina &amp; Han, 15ᵗʰ November 2026</p>
-    </footer>
-
-    <script src="script.js?v=20260519-form-fallback"></script>
+    <script src="script.js?v=20260520-mobile-invite-rsvp"></script>
   </body>
 </html>
