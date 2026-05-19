@@ -5,7 +5,20 @@ const videoPoster = document.querySelector("[data-video-poster]");
 const videoFrame = document.querySelector("[data-video-frame]");
 const playToggle = document.querySelector(".play-toggle");
 const hero = document.querySelector(".hero");
-const mobileQuery = window.matchMedia("(max-width: 820px)");
+
+function detectMobileDevice() {
+  const userAgent = navigator.userAgent || "";
+  const platform = navigator.platform || "";
+  const isTouchMac =
+    /Macintosh/i.test(userAgent) &&
+    /Mac/i.test(platform) &&
+    navigator.maxTouchPoints > 1;
+
+  return /Android|iPhone|iPad|iPod/i.test(userAgent) || isTouchMac;
+}
+
+const isMobileDevice = detectMobileDevice();
+document.documentElement.classList.toggle("is-mobile-device", isMobileDevice);
 
 function setText(selector, value) {
   const element = document.querySelector(selector);
@@ -63,7 +76,7 @@ function initReveals() {
 function getActiveVideoConfig() {
   if (!responsiveVideo) return {};
 
-  return mobileQuery.matches
+  return isMobileDevice
     ? {
         embed: responsiveVideo.dataset.mobileEmbed,
         poster: responsiveVideo.dataset.mobilePoster,
@@ -145,9 +158,3 @@ setInterval(updateCountdown, 1000);
 initReveals();
 initVideoControls();
 initRsvpFormFallback();
-
-if (typeof mobileQuery.addEventListener === "function") {
-  mobileQuery.addEventListener("change", resetVideoPreview);
-} else {
-  mobileQuery.addListener(resetVideoPreview);
-}

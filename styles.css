@@ -874,6 +874,7 @@ a {
     display: block;
     min-height: 0;
     max-width: 30rem;
+    min-width: 20rem;
     margin: 0 auto;
     padding: 0;
     position: relative;
@@ -894,11 +895,12 @@ a {
     left: 9.5%;
     position: absolute;
     text-align: left;
+    width: 81%;
     z-index: 2;
   }
 
   .schedule__title {
-    top: 6.2%;
+    top: 6%;
   }
 
   .schedule__title span {
@@ -921,16 +923,18 @@ a {
     list-style: none;
     margin: 0;
     padding: 0;
-    top: 9.2%;
+    top: 9.4%;
   }
 
   .schedule__list li {
+    align-items: baseline;
+    display: flex;
+    gap: 0.55rem;
     padding: 0 0 0.52rem;
   }
 
   .schedule__list time,
   .schedule__list span {
-    display: inline;
     font-size: 0.72rem;
     letter-spacing: 0;
     line-height: 1.25;
@@ -938,7 +942,15 @@ a {
   }
 
   .schedule__list time {
-    margin-right: 0.22rem;
+    flex: 0 0 3.6rem;
+    margin-right: 0;
+    white-space: nowrap;
+  }
+
+  .schedule__list span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .mobile-rsvp-teaser {
@@ -985,6 +997,10 @@ a {
 @media (max-width: 520px) {
   .section-pad {
     padding: 4rem 1rem;
+  }
+
+  .schedule {
+    padding: 0;
   }
 
   .invite__copy p:not(.script-heading) {
